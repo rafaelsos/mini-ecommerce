@@ -9,6 +9,11 @@ import { TStackScreenProps } from '@/shared/routes/RouteConfig.types'
 import { addToCart } from '@/shared/store/cart/CartCreators'
 import { AppDispatch } from '@/shared/store/StoreConfig'
 import { COLORS } from '@/shared/theme/colors'
+import {
+  horizontalScale,
+  verticalScale,
+  fontScale,
+} from '@/shared/utils/scaling'
 import { IProduct } from '@/features/catalog/domain/ProductEntity.types'
 import { makeProductByLoad } from '@/features/catalog/data/ProductByIdLoad'
 
@@ -28,7 +33,10 @@ export const ProductDetailsScreen: React.FC<
     (params: IProduct) => {
       dispatch(addToCart(params))
 
-      navigation.navigate('Cart')
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'CartTab' }],
+      })
     },
     [dispatch, navigation],
   )
@@ -76,14 +84,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.gray100,
   },
   content: {
-    paddingHorizontal: 16,
-    paddingTop: 20,
+    paddingHorizontal: horizontalScale(16),
+    paddingVertical: verticalScale(20),
     gap: 16,
   },
   containerImage: {
     backgroundColor: COLORS.white,
     borderRadius: 12,
-    padding: 8,
+    paddingHorizontal: horizontalScale(8),
+    paddingVertical: verticalScale(8),
     elevation: 2,
     shadowColor: COLORS.black100,
     shadowOffset: {
@@ -95,21 +104,22 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 280,
+    height: verticalScale(250),
   },
   title: {
-    fontSize: 22,
+    fontSize: fontScale(18),
     fontWeight: 'bold',
     color: COLORS.black100,
   },
   description: {
-    fontSize: 16,
+    fontSize: fontScale(12),
     fontWeight: '400',
     color: COLORS.black100,
+    lineHeight: fontScale(16),
   },
   price: {
-    fontSize: 14,
-    fontWeight: '400',
+    fontSize: fontScale(18),
+    fontWeight: '600',
     color: COLORS.blue200,
   },
 })

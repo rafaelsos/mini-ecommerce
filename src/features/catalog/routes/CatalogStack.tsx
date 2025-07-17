@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator<CatalogStackParamList>()
 const buttonGoBack = () => <ButtonGoBack />
 
 const buttonNavigationCart = (navigation: any) => (
-  <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+  <TouchableOpacity onPress={() => navigation.navigate('CartTab')}>
     <IconCart />
   </TouchableOpacity>
 )

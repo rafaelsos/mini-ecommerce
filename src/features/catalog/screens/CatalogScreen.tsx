@@ -11,6 +11,11 @@ import { useQuery } from '@tanstack/react-query'
 import { LoadingComponent } from '@/shared/components/Loading/LoadingComponent'
 import { TStackScreenProps } from '@/shared/routes/RouteConfig.types'
 import { COLORS } from '@/shared/theme/colors'
+import {
+  horizontalScale,
+  verticalScale,
+  fontScale,
+} from '@/shared/utils/scaling'
 import { makeCatalogLoad } from '@/features/catalog/data/CatalogLoad'
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />
@@ -41,6 +46,10 @@ export const CatalogScreen: React.FC<TStackScreenProps<'Catalog'>> = ({
               navigation.navigate('ProductDetails', { productId: item.id })
             }
             style={styles.itemContainer}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={`Produto ${item.title}`}
+            accessibilityHint={`Preço ${item.price} dólares. Toque para ver detalhes`}
           >
             <Image
               source={{ uri: item.image }}
@@ -66,15 +75,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.gray100,
   },
-  testText: {
-    padding: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: COLORS.black100,
-  },
   flatListContent: {
-    paddingVertical: 16,
-    paddingHorizontal: 8,
+    paddingVertical: verticalScale(16),
+    paddingHorizontal: horizontalScale(8),
   },
   row: {
     justifyContent: 'space-between',
@@ -82,10 +85,10 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     maxWidth: '48%',
-    padding: 12,
+    padding: horizontalScale(12),
     backgroundColor: COLORS.white,
     borderRadius: 12,
-    marginHorizontal: 4,
+    marginHorizontal: horizontalScale(4),
     gap: 4,
     elevation: 3,
     shadowColor: COLORS.black100,
@@ -97,21 +100,21 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   itemSeparator: {
-    height: 16,
+    height: verticalScale(16),
   },
   image: {
     width: '100%',
-    height: 173,
+    height: verticalScale(173),
     borderRadius: 8,
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   title: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     fontWeight: '500',
     color: COLORS.black100,
   },
   price: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     fontWeight: '400',
     color: COLORS.blue100,
   },

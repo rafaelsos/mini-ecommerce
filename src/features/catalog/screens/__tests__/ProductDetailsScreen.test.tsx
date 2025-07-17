@@ -22,7 +22,7 @@ const mockProduct = {
 }
 
 const mockNavigation = {
-  navigate: jest.fn(),
+  reset: jest.fn(),
 } as any
 
 const mockRoute = {
@@ -105,7 +105,10 @@ describe('ProductDetailsScreen', () => {
     fireEvent.press(getByTestId('add-to-cart-button'))
 
     expect(mockDispatch).toHaveBeenCalledWith(addToCart(mockProduct))
-    expect(mockNavigation.navigate).toHaveBeenCalledWith('Cart')
+    expect(mockNavigation.reset).toHaveBeenCalledWith({
+      index: 0,
+      routes: [{ name: 'CartTab' }],
+    })
   })
 
   it('should call makeProductByLoad handle through useQuery with correct productId', () => {

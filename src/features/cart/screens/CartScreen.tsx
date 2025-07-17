@@ -13,8 +13,13 @@ import { TStackScreenProps } from '@/shared/routes/RouteConfig.types'
 import { COLORS } from '@/shared/theme/colors'
 import { AppDispatch } from '@/shared/store/StoreConfig'
 import { removeProductCart } from '@/shared/store/cart/CartCreators'
-import { selectCart } from '@/shared/store/cart/CartSelectors'
+import { selectCart, selectCartTotal } from '@/shared/store/cart/CartSelectors'
 import { ButtonPrimary } from '@/shared/components/ButtonPrimary/ButtonPrimaryComponent'
+import {
+  horizontalScale,
+  verticalScale,
+  fontScale,
+} from '@/shared/utils/scaling'
 import IconTrash from '@/shared/assets/icons/icon-trash.svg'
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />
@@ -25,6 +30,7 @@ export const CartScreen: React.FC<TStackScreenProps<'Cart'>> = ({
   const dispatch = useDispatch<AppDispatch>()
 
   const storeCart = useSelector(selectCart)
+  const storeCartTotal = useSelector(selectCartTotal)
 
   return (
     <View style={styles.container}>
@@ -63,6 +69,10 @@ export const CartScreen: React.FC<TStackScreenProps<'Cart'>> = ({
             <TouchableOpacity
               onPress={() => dispatch(removeProductCart({ id: item.id }))}
               style={styles.buttonTrash}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Remover produto"
+              accessibilityHint="Toque para remover este produto do carrinho"
             >
               <IconTrash />
             </TouchableOpacity>
@@ -77,10 +87,7 @@ export const CartScreen: React.FC<TStackScreenProps<'Cart'>> = ({
           <View style={styles.contentSummary}>
             <Text style={styles.textSummary}>Total: </Text>
             <Text style={styles.textSummary}>
-              R$
-              {storeCart.products
-                .reduce((acc, item) => acc + item.price * item.quantity, 0)
-                .toFixed(2)}
+              R${storeCartTotal.toFixed(2)}
             </Text>
           </View>
 
@@ -108,18 +115,18 @@ const styles = StyleSheet.create({
   },
   textEmpty: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: fontScale(16),
     fontWeight: '500',
     color: COLORS.black100,
   },
   flatListContent: {
     flex: 1,
-    marginTop: 16,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    marginTop: verticalScale(16),
+    paddingVertical: verticalScale(16),
+    paddingHorizontal: horizontalScale(16),
   },
   itemSeparator: {
-    height: 16,
+    height: verticalScale(16),
   },
   containerItem: {
     flexDirection: 'row',
@@ -129,8 +136,8 @@ const styles = StyleSheet.create({
   containerImage: {
     backgroundColor: COLORS.white,
     borderRadius: 12,
-    paddingHorizontal: 8,
-    paddingVertical: 8,
+    paddingHorizontal: horizontalScale(8),
+    paddingVertical: verticalScale(8),
     elevation: 2,
     shadowColor: COLORS.black100,
     shadowOffset: {
@@ -141,28 +148,32 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: horizontalScale(80),
+    height: verticalScale(80),
   },
   contentDetail: {
     flex: 1,
     gap: 6,
   },
   title: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     fontWeight: '500',
     color: COLORS.black100,
   },
   quantity: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: COLORS.blue200,
   },
   buttonTrash: {
-    padding: 8,
+    padding: horizontalScale(8),
+    minWidth: horizontalScale(44),
+    minHeight: verticalScale(44),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerSummary: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
+    paddingHorizontal: horizontalScale(16),
+    paddingBottom: verticalScale(16),
     gap: 16,
   },
   contentSummary: {
@@ -170,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   textSummary: {
-    fontSize: 18,
+    fontSize: fontScale(18),
     color: COLORS.black100,
     fontWeight: '400',
   },
