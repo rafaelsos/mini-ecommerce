@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+build/
+dist/
+ios/build/
+android/build/
+android/app/build/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Pod files
+ios/Pods/
+Podfile.lock
+
+# Bundle artifacts
+*.jsbundle
+
+# CocoaPods
+ios/Podfile.lock
+
+# Generated files
+*.generated.*
